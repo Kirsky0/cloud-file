@@ -1,0 +1,6 @@
+[workspace]
+members = [
+    "src/operator",
+    "src/storage_index",
+    "src/storage_data",
+]

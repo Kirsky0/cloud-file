@@ -1,0 +1,16 @@
+[package]
+name = "operator"
+version = "0.0.1"
+edition = "2021"
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+candid = "0.7.15"
+ic-cdk = "0.5.2"
+ic-cdk-macros = "0.5.2"
+ic-types = "0.4.0"
+
+serde = "1.0.140"
+lazy_static = "1.4.0"
+base64 = "0.20.0-alpha.1"

@@ -1,0 +1,33 @@
+{
+  "canisters": {
+    "operator": {
+      "build": [
+        "cargo build --target wasm32-unknown-unknown --package  operator --release",
+        "ic-wasm target/wasm32-unknown-unknown/release/operator.wasm -o target/wasm32-unknown-unknown/release/operator_opt.wasm shrink"
+      ],
+      "candid": "src/operator/operator.did",
+      "wasm": "target/wasm32-unknown-unknown/release/operator_opt.wasm",
+      "type": "custom"
+    },
+    "operator_frontend": {
+      "dependencies": [
+        "operator"
+      ],
+      "frontend": {
+        "entrypoint": "src/operator_frontend/src/index.html"
+      },
+      "source": [
+        "src/operator_frontend/assets",
+        "src/operator_frontend/src"
+      ],
+      "type": "assets"
+    }
+  },
+  "networks": {
+    "local": {
+      "bind": "127.0.0.1:8000",
+      "type": "ephemeral"
+    }
+  },
+  "version": 1
+}

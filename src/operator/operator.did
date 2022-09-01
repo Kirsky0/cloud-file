@@ -1,0 +1,8 @@
+service : {
+    "add_user": (text) -> (text);
+    "show_user": (text) ->(text);
+    "mem_size": ()->(nat64) query;
+    "init_user": (text)->();
+    "set_wasm": (text) -> ();
+    "get_wasm": ()->(text) query;
+}
