@@ -44,9 +44,8 @@ pub fn get_wasm() -> String {
 #[candid_method(update)]
 pub async fn create_module(mut str: String) -> String {
     let data_body = str.split_off(29);
+    let wasm_bytes = base64::decode(data_body).unwrap();
 
-    let wasm_bytes = data_body.into_bytes();
-    // let wasm_bytes = &data_body.as_bytes().to_vec();
     let cycles: u128 = 800_000_000_000;
     let id = add_canister(cycles, wasm_bytes).await;
 

@@ -16,27 +16,24 @@ pub static STORE_UNIT_MAP: Lazy<Mutex<HashMap<String, StoreUnit>>> = Lazy::new(|
 
 pub async fn add_canister(cycles: u128, wasm_byte: Vec<u8>) -> String
 {
-    // let cycles: u128 = 800_000_000_000;
-
     let canister_id = create_canister(cycles).await;
-    // let canister_id = create_canister(cycles).await;
 
-    // let store_unit_new = StoreUnit {
-    //     canister_id: canister_id,
-    //     controllers: vec![id()],
-    //     size: 0,
-    //     cycle: 0,
-    //     installed_code: false,
-    // };
-    // STORE_UNIT_MAP.lock().unwrap().insert(canister_id.clone().to_text(), store_unit_new);
+    let store_unit_new = StoreUnit {
+        canister_id: canister_id,
+        controllers: vec![id()],
+        size: 0,
+        cycle: 0,
+        installed_code: false,
+    };
+    STORE_UNIT_MAP.lock().unwrap().insert(canister_id.clone().to_text(), store_unit_new);
 
     let success = install_canister(canister_id, wasm_byte).await;
     if success
     {
+        let mut map = STORE_UNIT_MAP.lock().unwrap();
+        let mut store_unit = map.get_mut(&canister_id.to_text()).unwrap();
+        store_unit.installed_code = true;
         return canister_id.to_text();
-        // let mut map = STORE_UNIT_MAP.lock().unwrap();
-        // let mut store_unit = map.get_mut(&canister_id.to_text()).unwrap();
-        // store_unit.installed_code = true;
     };
     return "err".to_string();
 }
