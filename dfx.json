@@ -1,24 +1,33 @@
 {
   "canisters": {
-    "operator": {
+    "manager": {
       "build": [
-        "cargo build --target wasm32-unknown-unknown --package  operator --release",
-        "ic-wasm target/wasm32-unknown-unknown/release/operator.wasm -o target/wasm32-unknown-unknown/release/operator_opt.wasm shrink"
+        "cargo build --target wasm32-unknown-unknown --package  manager --release",
+        "ic-wasm target/wasm32-unknown-unknown/release/manager.wasm -o target/wasm32-unknown-unknown/release/manager_opt.wasm shrink"
       ],
-      "candid": "src/operator/operator.did",
-      "wasm": "target/wasm32-unknown-unknown/release/operator_opt.wasm",
+      "candid": "src/manager/candid.did",
+      "wasm": "target/wasm32-unknown-unknown/release/manager_opt.wasm",
       "type": "custom"
     },
-    "operator_frontend": {
+    "wasm_bytecode": {
+      "build": [
+        "cargo build --target wasm32-unknown-unknown --package  wasm_bytecode --release",
+        "ic-wasm target/wasm32-unknown-unknown/release/wasm_bytecode.wasm -o target/wasm32-unknown-unknown/release/wasm_bytecode_opt.wasm shrink"
+      ],
+      "candid": "src/wasm_bytecode/candid.did",
+      "wasm": "target/wasm32-unknown-unknown/release/wasm_bytecode_opt.wasm",
+      "type": "custom"
+    },
+    "frontend": {
       "dependencies": [
-        "operator"
+        "manager"
       ],
       "frontend": {
-        "entrypoint": "src/operator_frontend/src/index.html"
+        "entrypoint": "src/frontend/src/index.html"
       },
       "source": [
-        "src/operator_frontend/assets",
-        "src/operator_frontend/src"
+        "src/frontend/assets",
+        "src/frontend/src"
       ],
       "type": "assets"
     }

@@ -1,5 +1,5 @@
 [package]
-name = "storage_data"
+name = "manager"
 version = "0.0.1"
 edition = "2021"
 [lib]
@@ -11,6 +11,7 @@ ic-cdk = "0.5.2"
 ic-cdk-macros = "0.5.2"
 ic-types = "0.4.0"
 
-serde = "1.0.140"
-lazy_static = "1.4.0"
+serde_json = "1.0.85"
+serde = "1.0.144"
 base64 = "0.20.0-alpha.1"
+once_cell = "1.13.0"

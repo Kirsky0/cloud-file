@@ -1,0 +1,13 @@
+type WasmBytecode = record {
+    module_name: text;
+    bytecode: text;
+    version: nat32;
+    remark: text;
+    create_time: nat64;
+};
+
+
+service : {
+    add_wasm_bytecode: (text, text, text, nat64) -> ();
+    list: () ->(vec WasmBytecode) query;
+}

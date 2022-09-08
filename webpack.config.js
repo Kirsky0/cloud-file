@@ -42,9 +42,9 @@ const canisterEnvVariables = initCanisterEnv();
 
 const isDevelopment = process.env.NODE_ENV !== "production";
 
-const frontendDirectory = "operator_frontend";
+const frontendDirectory = "frontend";
 
-const asset_entry = path.join("src", frontendDirectory, "src", "storage_index.html");
+const asset_entry = path.join("src", frontendDirectory, "src", "index.html");
 
 module.exports = {
     target: "web",
@@ -70,7 +70,7 @@ module.exports = {
         },
     },
     output: {
-        filename: "storage_index.js",
+        filename: "index.js",
         path: path.join(__dirname, "dist", frontendDirectory),
     },
 

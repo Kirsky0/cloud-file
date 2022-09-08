@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {operator} from "../../declarations/operator"
+import {manager} from "../../declarations/manager/"
 import ReactFileReader from "react-file-reader";
 
 const App = () => {
@@ -9,8 +9,10 @@ const App = () => {
 
         let str = file.base64.toString()
         console.log(str)
-        // operator.set_wasm('data:application/wasm;base64,AGFzbQEAAAAFg4CAgAABABAGkYCAgAACfwBBgIDAAAt/AEGAgMAACwelgICAAAMGbWVtb3J5AgAKX19kYXRhX2VuZAMAC19faGVhcF9iYXNlAwE=')
-        operator.set_wasm(str)
+        // manager.set_wasm('data:application/wasm;base64,AGFzbQEAAAAFg4CAgAABABAGkYCAgAACfwBBgIDAAAt/AEGAgMAACwelgICAAAMGbWVtb3J5AgAKX19kYXRhX2VuZAMAC19faGVhcF9iYXNlAwE=')
+        manager.create_module(str).then(r => {
+            console.log(r)
+        })
     }
     return (
 
