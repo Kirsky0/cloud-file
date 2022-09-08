@@ -1,5 +1,5 @@
 [workspace]
 members = [
-    "src/manager",
-    "src/wasm_bytecode"
+    "manager",
+    "wasm_bytecode"
 ]

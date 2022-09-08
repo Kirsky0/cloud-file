@@ -5,7 +5,7 @@
         "cargo build --target wasm32-unknown-unknown --package  manager --release",
         "ic-wasm target/wasm32-unknown-unknown/release/manager.wasm -o target/wasm32-unknown-unknown/release/manager_opt.wasm shrink"
       ],
-      "candid": "src/manager/candid.did",
+      "candid": "manager/candid.did",
       "wasm": "target/wasm32-unknown-unknown/release/manager_opt.wasm",
       "type": "custom"
     },
@@ -14,7 +14,7 @@
         "cargo build --target wasm32-unknown-unknown --package  wasm_bytecode --release",
         "ic-wasm target/wasm32-unknown-unknown/release/wasm_bytecode.wasm -o target/wasm32-unknown-unknown/release/wasm_bytecode_opt.wasm shrink"
       ],
-      "candid": "src/wasm_bytecode/candid.did",
+      "candid": "wasm_bytecode/candid.did",
       "wasm": "target/wasm32-unknown-unknown/release/wasm_bytecode_opt.wasm",
       "type": "custom"
     },
@@ -23,11 +23,11 @@
         "manager"
       ],
       "frontend": {
-        "entrypoint": "src/frontend/src/index.html"
+        "entrypoint": "frontend/src/index.html"
       },
       "source": [
-        "src/frontend/assets",
-        "src/frontend/src"
+        "frontend/assets",
+        "frontend/src"
       ],
       "type": "assets"
     }
