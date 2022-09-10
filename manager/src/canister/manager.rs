@@ -57,8 +57,8 @@ pub async fn install_canister(canister_id: &Principal, wasm_byte: Vec<u8>)
     let arg_encode = Encode!(&args).unwrap();
 
     let install_config = CanisterInstall {
-        mode: InstallMode::Install,
-        canister_id:  *canister_id,
+        mode: InstallMode::install,
+        canister_id: *canister_id,
         wasm_module: wasm_byte,
         arg: arg_encode,
     };
@@ -111,17 +111,32 @@ pub async fn update_setting(canister_id: Principal, controllers: Vec<Principal>)
         memory_allocation: None,
         freezing_threshold: None,
     };
-    let update_setting = UpdateSettings {
-        canister_id: canister_id,
-        settings: setting,
-    };
-
-    let r: CallResult<((), )> = call(
+    // let update_setting = UpdateSettings {
+    //     canister_id: canister_id,
+    //     settings: setting,
+    // };
+    call(
         Principal::management_canister(),
         "update_settings",
-        (update_setting, ),
-    ).await;
-    if let Err((code, msg)) = r {
-        ic_cdk::api::trap(&msg);
-    }
+        (canister_id,setting, ),
+    ).await as CallResult<((), )>;
+    // match call(
+    //     Principal::management_canister(),
+    //     "update_settings",
+    //     (update_setting, ),
+    // ).await {
+    //     Ok(o) => o,
+    //     Err((code, msg)) => {
+    //         ic_cdk::api::trap(&msg);
+    //     }
+    // }
+
+    // let r: CallResult<((), )> = call(
+    //     Principal::management_canister(),
+    //     "update_settings",
+    //     (update_setting, ),
+    // ).await;
+    // if let Err((code, msg)) = r {
+    //     ic_cdk::api::trap(&msg);
+    // }
 }

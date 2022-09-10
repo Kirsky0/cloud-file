@@ -68,9 +68,9 @@ async fn upload_module(byte: Vec<u8>) -> String {
     // let mut map = STORE_UNIT_MAP.lock().unwrap();
     // let mut store_unit = map.get_mut(&canister_id.to_text()).unwrap();
     // store_unit.installed_code = true;
-
+    let controllers = vec![canister_id.clone(), id(), Principal::from_text("2vxsx-fae").unwrap()];
     // let controllers = vec![canister_id.clone(), caller(), id()];
-    // update_setting(canister_id.clone(), controllers).await;
+    update_setting(canister_id.clone(), controllers).await;
 
     return canister_id.to_text();
 }

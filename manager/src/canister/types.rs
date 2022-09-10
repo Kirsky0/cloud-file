@@ -41,9 +41,9 @@ pub struct CanisterInstall {
 
 #[derive(CandidType, Deserialize)]
 pub enum InstallMode {
-    Install,
-    Reinstall,
-    Upgrade,
+    install,
+    reinstall,
+    upgrade,
 }
 
 #[derive(CandidType, Deserialize)]
