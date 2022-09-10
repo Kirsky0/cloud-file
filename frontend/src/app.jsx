@@ -1,7 +1,5 @@
 import React, {useState} from 'react';
 import {manager} from "../declarations/manager"
-import ReactFileReader from "react-file-reader";
-import Files from "react-butterfiles";
 
 const App = () => {
 
