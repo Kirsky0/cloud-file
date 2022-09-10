@@ -2,6 +2,6 @@ service : {
     mem_size: ()->(nat64) query;
     upload_wasm: (text) -> ();
     get_wasm: ()->(text) query;
-    create_module: (text)->(text);
+    upload_module: (blob)->(text);
     get_store: ()->(text)query;
 }

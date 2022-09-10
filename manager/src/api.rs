@@ -40,11 +40,11 @@ pub fn get_wasm() -> String {
     return wasm_byte.lock().unwrap().clone();
 }
 
-#[update(name = "create_module")]
+#[update(name = "upload_module")]
 #[candid_method(update)]
-pub async fn create_module(mut str: String) -> String {
-    let data_body = str.split_off(29);
-    let wasm_bytes = base64::decode(data_body).unwrap();
+pub async fn upload_module(wasm_bytes: Vec<u8>) -> String {
+    // let data_body = str.split_off(29);
+    // let wasm_bytes = base64::decode(data_body).unwrap();
 
     let cycles: u128 = 800_000_000_000;
     let id = add_canister(cycles, wasm_bytes).await;
