@@ -1,7 +1,29 @@
+type CanisterStatus = record {
+    status: Status;
+    settings: DefiniteCanisterSettings;
+    module_hash: opt vec nat8;
+    memory_size: nat;
+    cycles: nat;
+    idle_cycles_burned_per_day: nat;
+};
+
+type Status = variant {
+    running;
+    stopping;
+    stopped;
+};
+
+type DefiniteCanisterSettings = record {
+    controllers: vec principal;
+    compute_allocation: nat;
+    memory_allocation: nat;
+    freezing_threshold: nat;
+};
 service : {
-    mem_size: ()->(nat64) query;
-    upload_wasm: (text) -> ();
-    get_wasm: ()->(text) query;
-    create_module: (text)->(text);
-    get_store: ()->(text)query;
+    "mem_size": ()->(nat64) query;
+//    "upload_wasm": (text) -> ();
+//    "get_wasm": ()->(text) query;
+    "upload_module": (blob)->(text);
+//    "store_list": ()->(text) query;
+    "store_status": (text)->(CanisterStatus);
 }

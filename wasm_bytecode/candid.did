@@ -8,6 +8,9 @@ type WasmBytecode = record {
 
 
 service : {
-    add_wasm_bytecode: (text, text, text, nat64) -> ();
-    list: () ->(vec WasmBytecode) query;
+    "add_wasm_bytecode": (text, text, text, nat64) -> ();
+    "list": () ->(vec WasmBytecode) query;
+//    "get_controller": ()->(text) query;
+//    "status": ()->(text);
+//    "update_setting": (vec principal)->();
 }

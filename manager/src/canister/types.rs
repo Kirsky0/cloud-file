@@ -2,7 +2,7 @@ use candid::CandidType;
 use ic_cdk::export::Principal;
 use serde::{Deserialize, Serialize};
 
-#[derive(CandidType, Debug, Serialize, Deserialize, Clone)]
+#[derive(CandidType, Deserialize)]
 pub struct StoreUnit {
     pub canister_id: Principal,
     pub controllers: Vec<Principal>,
@@ -12,15 +12,24 @@ pub struct StoreUnit {
 }
 
 
-#[derive(CandidType, Deserialize, Clone)]
+#[derive(CandidType, Deserialize)]
 pub struct CreateResult {
     pub canister_id: Principal,
 }
 
-#[derive(CandidType, Clone, Deserialize)]
+#[derive(CandidType, Deserialize)]
 pub struct CanisterSettings {
-    pub controllers: Vec<Principal>,
+    pub controllers: Option<Vec<Principal>>,
+    pub compute_allocation: Option<u128>,
+    pub memory_allocation: Option<u128>,
+    pub freezing_threshold: Option<u128>,
 }
+
+#[derive(CandidType, Deserialize)]
+pub struct CreateCanisterArgs {
+    pub settings: Option<CanisterSettings>,
+}
+
 
 #[derive(CandidType, Deserialize)]
 pub struct CanisterInstall {
@@ -32,15 +41,53 @@ pub struct CanisterInstall {
 
 #[derive(CandidType, Deserialize)]
 pub enum InstallMode {
-    #[serde(rename = "install")]
     Install,
-    #[serde(rename = "reinstall")]
     Reinstall,
-    #[serde(rename = "upgrade")]
     Upgrade,
 }
 
 #[derive(CandidType, Deserialize)]
 pub struct InstallArgs {
     pub controller: String,
+}
+
+#[derive(CandidType, Deserialize)]
+pub struct UpdateArgs {
+    pub controllers: Vec<Principal>,
+}
+
+#[derive(CandidType, Deserialize)]
+pub struct StatusArgs {
+    pub canister_id: Principal,
+}
+
+#[derive(CandidType, Deserialize)]
+pub struct CanisterStatus {
+    pub status: Status,
+    pub settings: DefiniteCanisterSettings,
+    pub module_hash: Option<Vec<u8>>,
+    pub memory_size: u128,
+    pub cycles: u128,
+    pub idle_cycles_burned_per_day: u128,
+}
+
+#[derive(CandidType, Deserialize)]
+pub struct DefiniteCanisterSettings {
+    pub controllers: Vec<Principal>,
+    pub compute_allocation: u128,
+    pub memory_allocation: u128,
+    pub freezing_threshold: u128,
+}
+
+#[derive(CandidType, Deserialize)]
+pub enum Status {
+    running,
+    stopping,
+    stopped,
+}
+
+#[derive(CandidType, Deserialize)]
+pub struct UpdateSettings {
+    pub canister_id: Principal,
+    pub settings: CanisterSettings,
 }
