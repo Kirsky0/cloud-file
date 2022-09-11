@@ -8,7 +8,7 @@ pub struct WasmBytecode {
     pub bytecode: String,
     pub version: u32,
     pub remark: String,
-    pub create_time: u64,
+    pub upload_time: u64,
 }
 
 #[derive(CandidType, Deserialize,Clone)]

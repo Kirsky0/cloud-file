@@ -21,7 +21,7 @@ static CONN: Lazy<Mutex<Connection>> = Lazy::new(|| {
 	bytecode blob NOT NULL,
 	version integer NOT NULL,
 	remark text NOT NULL,
-	create_time integer NOT NULL)",
+	upload_time integer NOT NULL)",
         (), // empty list of parameters.
     );
     Mutex::new(conn)
@@ -46,16 +46,16 @@ pub fn init() {
 
 #[update(name = "add_wasm_bytecode")]
 #[candid_method(update)]
-pub fn add_wasm_bytecode(module_name: String, bytecode: String, remark: String, create_time: u64)
+pub fn add_wasm_bytecode(module_name: String, bytecode: String, remark: String, upload_time: u64)
 {
     // let record: WasmBytecode = serde_json::from_str(&json).unwrap();
 
     let mut conn = CONN.lock().unwrap();
-    let sql: &str = "INSERT INTO wasm_bytecode (module_name,bytecode,version,remark,create_time) VALUES (?1, ?2, ?3, ?4, ?5)";
+    let sql: &str = "INSERT INTO wasm_bytecode (module_name,bytecode,version,remark,upload_time) VALUES (?1, ?2, ?3, ?4, ?5)";
 
     let mut version = exist_record_count(&module_name);
     version = version + 1;
-    conn.execute(sql, rusqlite::params![module_name,bytecode,version,remark,create_time]);
+    conn.execute(sql, rusqlite::params![module_name,bytecode,version,remark,upload_time]);
 }
 
 fn exist_record_count(module_name: &String) -> usize
@@ -75,7 +75,7 @@ fn exist_record_count(module_name: &String) -> usize
 pub fn list() -> Vec<WasmBytecode>
 {
     let conn = CONN.lock().unwrap();
-    let mut stmt = conn.prepare("SELECT module_name,version,remark,create_time FROM wasm_bytecode  ").unwrap();
+    let mut stmt = conn.prepare("SELECT module_name,version,remark,upload_time FROM wasm_bytecode  ").unwrap();
     let mut rows = stmt.query([]).unwrap();
     let mut records: Vec<WasmBytecode> = Vec::new();
 
@@ -85,7 +85,7 @@ pub fn list() -> Vec<WasmBytecode>
             bytecode: "".to_string(),
             version: row.get(1).unwrap(),
             remark: row.get(2).unwrap(),
-            create_time: row.get(3).unwrap(),
+            upload_time: row.get(3).unwrap(),
         };
         records.push(p)
     }

@@ -3,7 +3,7 @@ type WasmBytecode = record {
     bytecode: text;
     version: nat32;
     remark: text;
-    create_time: nat64;
+    upload_time: nat64;
 };
 
 type CanisterStatus = record {
