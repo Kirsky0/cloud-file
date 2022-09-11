@@ -92,51 +92,21 @@ pub fn list() -> Vec<WasmBytecode>
     return records;
 }
 
-// #[query(name = "get_controller")]
-// #[candid_method(query)]
-// pub fn get_controller() -> String
-// {
-//     return ENV_PARAM.lock().unwrap().deref().clone().controller;
-// }
 
+#[update(name = "status")]
+#[candid_method(update)]
+pub async fn status() -> CanisterStatus {
+    let arg = StatusArgs { canister_id: id() };
 
-// #[update(name = "status")]
-// #[candid_method(update)]
-// pub async fn status() -> String {
-//     let arg = StatusArgs { canister_id: id() };
-//     let r: CallResult<(CanisterStatus, )> = call(
-//         Principal::management_canister(),
-//         "canister_status",
-//         (arg, ),
-//     ).await;
-//     if let Err((code, msg)) = r {
-//         ic_cdk::api::trap(&msg);
-//     }
-//     let status = r.unwrap().0;
-//     return serde_json::to_string(&status).unwrap();
-// }
-//
-// #[update(name = "update_setting")]
-// #[candid_method(update)]
-// pub async fn update_setting(mut controllers: Vec<Principal>) {
-//     controllers.push(id());
-//     let setting = CanisterSettings {
-//         controllers: Some(controllers),
-//         compute_allocation: None,
-//         memory_allocation: None,
-//         freezing_threshold: None,
-//     };
-//     let update_setting = UpdateSettings {
-//         canister_id: id(),
-//         settings: setting,
-//     };
-//
-//     let r: CallResult<((), )> = call(
-//         Principal::management_canister(),
-//         "update_settings",
-//         (update_setting, ),
-//     ).await;
-//     if let Err((code, msg)) = r {
-//         ic_cdk::api::trap(&msg);
-//     }
-// }
+    let (status, ): (CanisterStatus, ) = match call(
+        Principal::management_canister(),
+        "canister_status",
+        (arg, ),
+    ).await {
+        Ok(o) => o,
+        Err((code, msg)) => {
+            ic_cdk::api::trap(&msg);
+        }
+    };
+    return status;
+}

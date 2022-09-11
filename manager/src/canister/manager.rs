@@ -111,32 +111,18 @@ pub async fn update_setting(canister_id: Principal, controllers: Vec<Principal>)
         memory_allocation: None,
         freezing_threshold: None,
     };
-    // let update_setting = UpdateSettings {
-    //     canister_id: canister_id,
-    //     settings: setting,
-    // };
-    call(
+    let update_setting = UpdateSettings {
+        canister_id: canister_id,
+        settings: setting,
+    };
+    match call(
         Principal::management_canister(),
         "update_settings",
-        (canister_id,setting, ),
-    ).await as CallResult<((), )>;
-    // match call(
-    //     Principal::management_canister(),
-    //     "update_settings",
-    //     (update_setting, ),
-    // ).await {
-    //     Ok(o) => o,
-    //     Err((code, msg)) => {
-    //         ic_cdk::api::trap(&msg);
-    //     }
-    // }
-
-    // let r: CallResult<((), )> = call(
-    //     Principal::management_canister(),
-    //     "update_settings",
-    //     (update_setting, ),
-    // ).await;
-    // if let Err((code, msg)) = r {
-    //     ic_cdk::api::trap(&msg);
-    // }
+        (update_setting, ),
+    ).await {
+        Ok(o) => o,
+        Err((code, msg)) => {
+            ic_cdk::api::trap(&msg);
+        }
+    }
 }
