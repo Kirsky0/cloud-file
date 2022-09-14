@@ -12,7 +12,6 @@ import {
 import {manager} from "../declarations/manager";
 import {useFormik} from "formik";
 
-
 const {useDisclosure} = require("@chakra-ui/react");
 
 const Index = ({count}) => {
@@ -40,6 +39,10 @@ const Index = ({count}) => {
             console.log(values)
             console.log(wasmByte)
             console.log(new Date().getTime())
+
+            // manager.upload_module(file).then(r => {
+            //     console.log(r)
+            // })
         },
     })
 
